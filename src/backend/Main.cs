@@ -1,43 +1,41 @@
+using System;
 using System.Net;
 using System.Text;
 
-namespace start{
-    class Program{
-        static void Main(string[] args){
-
+namespace start {
+    class Program {
+        static void Main(string[] args) {
             using var listener = new HttpListener();
             listener.Prefixes.Add("http://*:8001/");
             listener.Start();
+            Console.WriteLine("Serwer działa na http://localhost:8001/");
 
-            Console.WriteLine("Listening on port 8001...");
-
-            while (true)
-            {
+            while (true) {
+                Console.WriteLine("react");
                 HttpListenerContext context = listener.GetContext();
-                using HttpListenerResponse resp = context.Response;
+                HttpListenerResponse resp = context.Response;
 
-        
-                resp.Headers.Set("Content-Type", "text/html; charset=utf-8");
+                resp.AddHeader("Access-Control-Allow-Origin", "*");
+                resp.AddHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                resp.AddHeader("Access-Control-Allow-Headers", "Content-Type");
 
-                string filePath = "/frontend/index.html";
-
-                if (File.Exists(filePath))
-                {
-                   
-                    byte[] buffer = File.ReadAllBytes(filePath);
-                    resp.ContentLength64 = buffer.Length;
-
-
-                    using Stream ros = resp.OutputStream;
-                    ros.Write(buffer, 0, buffer.Length);
+                if (context.Request.HttpMethod == "OPTIONS") {
+                    resp.StatusCode = (int)HttpStatusCode.OK;
+                    resp.Close();
+                    continue;
                 }
-                else
-                {
 
-                    resp.StatusCode = 404;
-                    byte[] errorBuffer = Encoding.UTF8.GetBytes("Błąd: Nie znaleziono pliku index.html");
-                    resp.OutputStream.Write(errorBuffer, 0, errorBuffer.Length);
+                string responseString = "{\"message\": \"Dziala z C#!\"}";
+                byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+                
+                resp.ContentType = "application/json";
+                resp.ContentLength64 = buffer.Length;
+                
+                using (var output = resp.OutputStream) {
+                    output.Write(buffer, 0, buffer.Length);
                 }
+
+                Console.WriteLine("Wysłano odpowiedź do Reacta");
             }
         }
     }

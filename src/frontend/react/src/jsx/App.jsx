@@ -7,12 +7,7 @@ import '../css/App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  const testApi = () => {
-    fetch('/api')
-      .then(res => res.text())
-      .then(data => alert("Serwer odpowiedział: " + data))
-      .catch(err => alert("Błąd połączenia: " + err));
-  };
+  
   
   return (
     

@@ -7,4 +7,11 @@ function Home(){
         </>
     )
 }
+function Auction(){
+    return(
+        <>
+        
+        </>
+    )
+}
 export default Home

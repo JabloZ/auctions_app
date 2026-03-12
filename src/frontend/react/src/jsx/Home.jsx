@@ -11,6 +11,7 @@ function Home(){
         <h1>Home page</h1>
         <p className="napis">agasgas</p>
         <button onClick={testApi}>przycisk</button>
+        <button onClick={testApi}>przycisk2</button>
         </>
     )
 }

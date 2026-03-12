@@ -4,5 +4,5 @@ COPY . /app/
 
 WORKDIR /app
 
-CMD ["dotnet","run","Main.cs"]
+CMD ["dotnet","run","--project","server"]
 

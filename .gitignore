@@ -1,2 +1,7 @@
 src/frontend/node_modules
 src/frontend/react/node_modules
+bin
+obj
+.env
+*.sln
+*.slnx

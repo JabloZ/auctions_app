@@ -32,6 +32,8 @@ services:
     container_name: auction_db
     ports:
       - "5438:5432"
+    volumes:
+      - ./src/db/test.sql:/docker-entrypoint-initdb.d/test.sql
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}

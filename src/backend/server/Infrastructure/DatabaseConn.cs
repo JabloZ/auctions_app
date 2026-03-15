@@ -2,10 +2,11 @@
 namespace Auctions.Infrastructure{
     using Npgsql;
     class DatabaseConn{
-        public async Task DbConnect(){
+        public async Task<NpgsqlConnection> DbConnect(){
             var connString=Environment.GetEnvironmentVariable("CONNECTION_STRING");
-            await using var conn=new NpgsqlConnection(connString);
+            var conn=new NpgsqlConnection(connString);
             await conn.OpenAsync();
+            return conn;
         }
     }
 }

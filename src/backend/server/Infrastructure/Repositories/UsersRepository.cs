@@ -1,5 +1,5 @@
-namespace Auctions.Infrastructure.UserRepository{
-    class UserRepository{
+namespace Auctions.Infrastructure.Repositories{
+    class UsersRepository{
         
     }
 }

@@ -2,23 +2,9 @@
 using System.Net;
 using System.Text;
 using Npgsql;
+using Auctions.Infrastructure.Repositories;
 namespace Start {
     class Start {
-        public async Task RunDatabaseOperations()
-            {
-                var connString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-                await using var conn = new NpgsqlConnection(connString);
-                await conn.OpenAsync();
-
-                await using (var cmd = new NpgsqlCommand("SELECT * FROM users", conn))
-                await using (var reader = await cmd.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        Console.WriteLine(reader.GetInt32(0));
-                    }
-                }
-        }
         public static async Task Main(string[] args) {
             using var listener = new HttpListener();
             listener.Prefixes.Add("http://*:8001/");
@@ -49,8 +35,9 @@ namespace Start {
                 using (var output = resp.OutputStream) {
                     output.Write(buffer, 0, buffer.Length);
                 }
-                var app=new Start();
-                await app.RunDatabaseOperations();
+                
+                var auct=new AuctionsRepository();
+                await auct.GetAuctionsList();
                 Console.WriteLine("Wysłano odpowiedź do Reacta");
             }
         }

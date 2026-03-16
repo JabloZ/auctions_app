@@ -8,3 +8,5 @@ Dockerfile
 docker-compose.yml
 .env
 .env.local
+bin
+obj

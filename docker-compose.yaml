@@ -12,7 +12,9 @@ services:
     volumes:
       - ./src/backend:/app
       - ./src/frontend:/frontend
-    command: sh -c "dotnet run Main.cs"
+    environment:
+      - CONNECTION_STRING=Host=${DB_HOST};Port=${DB_PORT};Username=${DB_USER};Password=${DB_PASSWORD};Database=${DB_NAME}
+    command: sh -c "dotnet run --project server"
   frontend:
     build: ./src/frontend
     container_name: react_front
@@ -22,16 +24,20 @@ services:
     volumes:
       - ./src/frontend:/app
       - /app/node_modules
+    networks:
+      - app_network
     command: sh -c "npm install && npm run dev --host"
   db:    
     build: ./src/db
     container_name: auction_db
     ports:
       - "5438:5432"
+    volumes:
+      - ./src/db/test.sql:/docker-entrypoint-initdb.d/test.sql
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=auction_db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     networks:
       - app_network
 

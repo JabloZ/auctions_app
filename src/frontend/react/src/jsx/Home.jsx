@@ -8,10 +8,14 @@ function Home(){
   };
     return (
         <>
-        <h1>Home page</h1>
-        <p className="napis">agasgas</p>
-        <button onClick={testApi}>przycisk</button>
-        <button onClick={testApi}>przycisk2</button>
+        <div className='HomePageBox'>
+            <h1>Search for auctions:</h1>
+            <button onClick={testApi}>przycisk</button>
+            <div className="search-container">
+                <input type="text" placeholder="Search data..." className="search-bar"/>
+                 <button onClick={testApi}>Search</button>
+            </div>
+        </div>
         </>
     )
 }

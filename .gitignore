@@ -21,3 +21,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+bin
+obj
+.env
+*.sln
+*.slnx
